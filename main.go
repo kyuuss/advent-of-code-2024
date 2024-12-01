@@ -80,5 +80,26 @@ func main() {
 		log.Fatal(err)
 	}
 	distance := get_distance(right, left)
-	println(distance)
+	similarity := get_similarity(right, left)
+	fmt.Println(similarity)
+	fmt.Println(distance)
+}
+
+func get_similarity(right, left []int) int {
+	// Create a frequency map for the right list
+	rightFreq := make(map[int]int)
+	for _, num := range right {
+		rightFreq[num]++
+	}
+
+	// Calculate similarity score
+	totalScore := 0
+	for _, leftNum := range left {
+		// Multiply the number by its frequency in the right list
+		frequency := rightFreq[leftNum] // Will be 0 if number doesn't exist in right list
+		score := leftNum * frequency
+		totalScore += score
+	}
+
+	return totalScore
 }
