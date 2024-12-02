@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -22,7 +23,7 @@ func isReportSafe(levels []int) bool {
 		diff := levels[i] - levels[i-1]
 
 		// Check if difference is between 1 and 3 (inclusive)
-		if absoluteNumber(diff) < 1 || absoluteNumber(diff) > 3 {
+		if math.Abs(float64(diff)) < 1 || math.Abs(float64(diff)) > 3 {
 			return false
 		}
 
@@ -38,17 +39,8 @@ func isReportSafe(levels []int) bool {
 	return true
 }
 
-// Returns the absolute value of x
-// e.g. absoluteNumber(-5) = 5
-func absoluteNumber(x int) int {
-	if x < 0 {
-		return -x
-	}
-	return x
-}
-
 func main() {
-	file, err := os.Open("/02/input.txt")
+	file, err := os.Open("02/input.txt")
 
 	if err != nil {
 		fmt.Printf("Error opening file: %v\n", err)
@@ -69,6 +61,7 @@ func main() {
 		levels := make([]int, len(numStrs))
 
 		for i, numStr := range numStrs {
+			// Convert string to int
 			num, err := strconv.Atoi(numStr)
 			if err != nil {
 				fmt.Printf("Error parsing number: %v\n", err)
